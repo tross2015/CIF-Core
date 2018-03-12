@@ -132,7 +132,7 @@ public:
         pchMessageStart[2] = 0x6b;
         pchMessageStart[3] = 0xbd;
         vAlertPubKey = ParseHex("04971b45c4d935ae32261ff9cc6d30cfc3f0854a9fc323207c286c09820235661d5623ed47436597042203c0c12399cf9ff6a02e2cafaf50ddeae60484c4839684");
-        nDefaultPort = 9999;
+        nDefaultPort = 43199;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 100000;
@@ -249,7 +249,7 @@ public:
         pchMessageStart[2] = 0xca;
         pchMessageStart[3] = 0xff;
         vAlertPubKey = ParseHex("0461501dda59d9113c2a2aa8e99cd9e8548cd8ccf9391474622a02bc1e4ea7b4a8c1af44a4a8b0f562305382a083d6c5dc55ffe6dbca8efe60374d9e9b3fe7ebe6");
-        nDefaultPort = 19999;
+        nDefaultPort = 23799;
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 1000;
@@ -362,7 +362,7 @@ public:
         pchMessageStart[3] = 0xdc;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nDelayGetHeadersTime = 0; // never delay GETHEADERS in regtests
-        nDefaultPort = 19994;
+        nDefaultPort = 63994;
         nPruneAfterHeight = 1000;
 
         genesis = CreateGenesisBlock(1513801234, 1, 0x207fffff, 1, 50 * COIN);

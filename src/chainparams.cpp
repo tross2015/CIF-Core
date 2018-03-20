@@ -10,11 +10,8 @@
 #include "tinyformat.h"
 #include "util.h"
 #include "utilstrencodings.h"
-
 #include <assert.h>
-
 #include <boost/assign/list_of.hpp>
-
 #include "chainparamsseeds.h"
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
@@ -127,38 +124,49 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xbf;
+        pchMessageStart[0] = 0x2f;
         pchMessageStart[1] = 0x0c;
         pchMessageStart[2] = 0x6b;
-        pchMessageStart[3] = 0xbd;
+        pchMessageStart[3] = 0x4d;
         vAlertPubKey = ParseHex("04971b45c4d935ae32261ff9cc6d30cfc3f0854a9fc323207c286c09820235661d5623ed47436597042203c0c12399cf9ff6a02e2cafaf50ddeae60484c4839684");
         nDefaultPort = 43199;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1513801232, 84872, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1513801232, 2189284, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000bab5c4e2a625009946575cc0eb6e82da047de70de478e4666810d017a44"));
+
+        uint256 testHashGenesisBlock = genesis.GetHash();
+        printf("* Genesis Hex (before hash): %s\n", HexStr(BEGIN(genesis.nVersion), END(genesis.nNonce)).c_str());
+        printf("* Genesis Hash (after hash): %s\n", HexStr(BEGIN(testHashGenesisBlock), END(testHashGenesisBlock)).c_str());
+
+        printf("* Genesis: %s\n",genesis.ToString().c_str());
+        printf("* nVersion: %d\n",genesis.nVersion);
+        printf("* hashPrevBlock: %s\n",HexStr(genesis.hashPrevBlock).c_str());
+        printf("* hashMerkleRoot: %s\n",HexStr(genesis.hashMerkleRoot).c_str());
+        printf("* nTime: %d\n",genesis.nTime);
+        printf("* nBits: %d\n",genesis.nBits);
+        printf("* nNonce: %d\n",genesis.nNonce);
+
         assert(genesis.hashMerkleRoot == uint256S("0x1a1469ab25b242ece1c1eea5301d6c90376b1d612242a720a25862c966057303"));
+        assert(consensus.hashGenesisBlock == uint256S("0x2f410836673a0bf23369b00cbda395585221ab615fbf8ff3ae2774287a7b72c1"));
 
+        vFixedSeeds.clear();
         vSeeds.clear();
+        vSeeds.push_back(CDNSSeedData("209.250.241.176", "209.250.243.131"));
+        vSeeds.push_back(CDNSSeedData("45.77.239.108", "107.191.44.102"));
 
-        // vSeeds.push_back(CDNSSeedData("dash.org", "dnsseed.dash.org"));
-        // vSeeds.push_back(CDNSSeedData("dashdot.io", "dnsseed.dashdot.io"));
-        // vSeeds.push_back(CDNSSeedData("masternode.io", "dnsseed.masternode.io"));
-        // vSeeds.push_back(CDNSSeedData("dashpay.io", "dnsseed.dashpay.io"));
-
-        // Dash addresses start with 'X'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,76);
+        // Dash addresses start with 'C'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);
         // Dash script addresses start with '7'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,16);
         // Dash private keys start with '7' or 'X'
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,204);
-        // Dash BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
-        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-        // Dash BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
-        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
+        // Dash BIP32 pubkeys start with 'drkv'
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x02)(0xFE)(0x52)(0xF8).convert_to_container<std::vector<unsigned char> >();
+        // Dash BIP32 prvkeys start with 'drkp'
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x02)(0xFE)(0x52)(0xCC).convert_to_container<std::vector<unsigned char> >();
 
         // Dash BIP44 coin type is '5'
         nExtCoinType = 5;
@@ -177,11 +185,11 @@ public:
 
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
-            (  0, uint256S("0x00000bab5c4e2a625009946575cc0eb6e82da047de70de478e4666810d017a44")),
+            (  0, uint256S("0x2f410836673a0bf23369b00cbda395585221ab615fbf8ff3ae2774287a7b72c1")),
             1513801232, // * UNIX timestamp of last checkpoint block
-            0,          // * total number of transactions between genesis and last checkpoint
+            2,          // * total number of transactions between genesis and last checkpoint
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            5000        // * estimated number of transactions per day after checkpoint
+            2           // * estimated number of transactions per day after checkpoint
         };
     }
 };

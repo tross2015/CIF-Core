@@ -1774,6 +1774,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
             Misbehaving(pfrom->GetId(), 20);
             return error("headers message size = %u", nCount);
         }
+
+        printf("Received headers from %d, count: %d\n", pfrom->GetId(), nCount);
+
         headers.resize(nCount);
         for (unsigned int n = 0; n < nCount; n++) {
             vRecv >> headers[n];
@@ -1785,6 +1788,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
         LOCK(cs_main);
         uint256 hashLastBlock;
         for (const CBlockHeader& header : headers) {
+            printf("Reading header from %d. Hash: %s, prevHash: %s\n", pfrom->GetId(), header.GetHash().ToString().c_str(), header.hashPrevBlock.ToString().c_str());
             if (!hashLastBlock.IsNull() && header.hashPrevBlock != hashLastBlock) {
                 Misbehaving(pfrom->GetId(), 20);
                 return error("non-continuous headers sequence");

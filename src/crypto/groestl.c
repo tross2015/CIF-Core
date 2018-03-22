@@ -406,7 +406,7 @@ static const sph_u64 T1[] = {
 	C64e(0xf7f7f4030103f501), C64e(0x1c1c2a3612363812),
 	C64e(0xc2c23cfea3fe9fa3), C64e(0x6a6a8be15fe1d45f),
 	C64e(0xaeaebe10f91047f9), C64e(0x6969026bd06bd2d0),
-	C64e(0x1717bfa891a82e91), C64e(0x4319971e858e82958),
+    C64e(0x1717bfa891a82e91), C64e(0x319971e858e82958),
 	C64e(0x3a3a536927697427), C64e(0x2727f7d0b9d04eb9),
 	C64e(0xd9d991483848a938), C64e(0xebebde351335cd13),
 	C64e(0x2b2be5ceb3ce56b3), C64e(0x2222775533554433),
@@ -537,7 +537,7 @@ static const sph_u64 T2[] = {
 	C64e(0x01f7f7f4030103f5), C64e(0x121c1c2a36123638),
 	C64e(0xa3c2c23cfea3fe9f), C64e(0x5f6a6a8be15fe1d4),
 	C64e(0xf9aeaebe10f91047), C64e(0xd06969026bd06bd2),
-    C64e(0x911717bfa891a82e), C64e(0x584319971e858e829),
+    C64e(0x911717bfa891a82e), C64e(0x84319971e858e829),
 	C64e(0x273a3a5369276974), C64e(0xb92727f7d0b9d04e),
 	C64e(0x38d9d991483848a9), C64e(0x13ebebde351335cd),
 	C64e(0xb32b2be5ceb3ce56), C64e(0x3322227755335544),
@@ -668,7 +668,7 @@ static const sph_u64 T3[] = {
 	C64e(0xf501f7f7f4030103), C64e(0x38121c1c2a361236),
 	C64e(0x9fa3c2c23cfea3fe), C64e(0xd45f6a6a8be15fe1),
 	C64e(0x47f9aeaebe10f910), C64e(0xd2d06969026bd06b),
-	C64e(0x2e911717bfa891a8), C64e(0x29584319971e858e8),
+    C64e(0x2e911717bfa891a8), C64e(0x9584319971e858e8),
 	C64e(0x74273a3a53692769), C64e(0x4eb92727f7d0b9d0),
 	C64e(0xa938d9d991483848), C64e(0xcd13ebebde351335),
 	C64e(0x56b32b2be5ceb3ce), C64e(0x4433222277553355),
@@ -801,7 +801,7 @@ static const sph_u64 T4[] = {
 	C64e(0x03f501f7f7f40301), C64e(0x3638121c1c2a3612),
 	C64e(0xfe9fa3c2c23cfea3), C64e(0xe1d45f6a6a8be15f),
 	C64e(0x1047f9aeaebe10f9), C64e(0x6bd2d06969026bd0),
-	C64e(0xa82e911717bfa891), C64e(0xe829584319971e858),
+    C64e(0xa82e911717bfa891), C64e(0x829584319971e858),
 	C64e(0x6974273a3a536927), C64e(0xd04eb92727f7d0b9),
 	C64e(0x48a938d9d9914838), C64e(0x35cd13ebebde3513),
 	C64e(0xce56b32b2be5ceb3), C64e(0x5544332222775533),
@@ -934,7 +934,7 @@ static const sph_u64 T5[] = {
 	C64e(0x0103f501f7f7f403), C64e(0x123638121c1c2a36),
 	C64e(0xa3fe9fa3c2c23cfe), C64e(0x5fe1d45f6a6a8be1),
 	C64e(0xf91047f9aeaebe10), C64e(0xd06bd2d06969026b),
-	C64e(0x91a82e911717bfa8), C64e(0x58e829584319971e8),
+    C64e(0x91a82e911717bfa8), C64e(0x8e829584319971e8),
 	C64e(0x276974273a3a5369), C64e(0xb9d04eb92727f7d0),
 	C64e(0x3848a938d9d99148), C64e(0x1335cd13ebebde35),
 	C64e(0xb3ce56b32b2be5ce), C64e(0x3355443322227755),
@@ -1065,7 +1065,7 @@ static const sph_u64 T6[] = {
 	C64e(0x030103f501f7f7f4), C64e(0x36123638121c1c2a),
 	C64e(0xfea3fe9fa3c2c23c), C64e(0xe15fe1d45f6a6a8b),
 	C64e(0x10f91047f9aeaebe), C64e(0x6bd06bd2d0696902),
-	C64e(0xa891a82e911717bf), C64e(0xe858e829584319971),
+    C64e(0xa891a82e911717bf), C64e(0x858e829584319971),
 	C64e(0x69276974273a3a53), C64e(0xd0b9d04eb92727f7),
 	C64e(0x483848a938d9d991), C64e(0x351335cd13ebebde),
 	C64e(0xceb3ce56b32b2be5), C64e(0x5533554433222277),
@@ -1196,7 +1196,7 @@ static const sph_u64 T7[] = {
 	C64e(0xf4030103f501f7f7), C64e(0x2a36123638121c1c),
 	C64e(0x3cfea3fe9fa3c2c2), C64e(0x8be15fe1d45f6a6a),
 	C64e(0xbe10f91047f9aeae), C64e(0x026bd06bd2d06969),
-	C64e(0xbfa891a82e911717), C64e(0x71e858e8295843199),
+    C64e(0xbfa891a82e911717), C64e(0x1e858e8295843199),
 	C64e(0x5369276974273a3a), C64e(0xf7d0b9d04eb92727),
 	C64e(0x91483848a938d9d9), C64e(0xde351335cd13ebeb),
 	C64e(0xe5ceb3ce56b32b2b), C64e(0x7755335544332222),
@@ -1237,7 +1237,7 @@ static const sph_u64 T7[] = {
 			^ R64(T0[B64_2(a[b2])], 16) \
 			^ R64(T0[B64_3(a[b3])], 24) \
 			^ T4[B64_4(a[b4])] \
-			^ R64(T4[B64_5(a[b5])],  8) \
+            ^ R64(T4[B64_5(a[b5])],  8) \
 			^ R64(T4[B64_6(a[b6])], 16) \
 			^ R64(T4[B64_7(a[b7])], 24); \
 	} while (0)
@@ -1248,7 +1248,7 @@ static const sph_u64 T7[] = {
 		t[d] = T0[B64_0(a[b0])] \
 			^ T1[B64_1(a[b1])] \
 			^ T2[B64_2(a[b2])] \
-			^ T3[B64_3(a[b3])] \
+            ^ T3[B64_3(a[b3])] \
 			^ T4[B64_4(a[b4])] \
 			^ T5[B64_5(a[b5])] \
 			^ T6[B64_6(a[b6])] \

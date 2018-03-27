@@ -1233,6 +1233,17 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
     double dDiff;
     CAmount nSubsidyBase;
 
+    if(nPrevHeight == 1) return 200000000 * COIN;
+
+    if(nPrevHeight > 1 && nPrevHeight <= 200000) return 50 * COIN;
+        if(nPrevHeight > 200000 && nPrevHeight <= 400000) return 25 * COIN;
+        if(nPrevHeight > 400000 && nPrevHeight <= 600000) return 12.5 * COIN;
+        if(nPrevHeight > 600000 && nPrevHeight <= 800000) return 6.25 * COIN;
+        if(nPrevHeight > 800000 && nPrevHeight <= 1000000) return 3.125 * COIN;
+        if(nPrevHeight > 1000000) return 1.5 * COIN;
+
+
+
     if (nPrevHeight <= 4500 && Params().NetworkIDString() == CBaseChainParams::MAIN) {
         /* a bug which caused diff to not be correctly calculated */
         dDiff = (double)0x0000ffff / (double)(nPrevBits & 0x00ffffff);
@@ -3245,8 +3256,8 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationState& sta
         double n1 = ConvertBitsToDouble(block.nBits);
         double n2 = ConvertBitsToDouble(nBitsNext);
 
-        if (abs(n1-n2) > n1*0.5)
-            return state.DoS(100, error("%s : incorrect proof of work (DGW pre-fork) - %f %f %f at %d", __func__, abs(n1-n2), n1, n2, nHeight),
+        if (abs(n1-n2) > n1*0.5)            
+            return state.DoS(100, error("%s : incorrect proof of work (DGW pre-fork) - %f %f %f at %d | (%d, %d)", __func__, abs(n1-n2), n1, n2, nHeight, block.nBits, nBitsNext),
                             REJECT_INVALID, "bad-diffbits");
     } else {
         if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams))

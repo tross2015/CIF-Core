@@ -241,19 +241,23 @@ public:
         consensus.defaultAssumeValid = uint256S("0x0000000004f5aef732d572ff514af99a995702c92e4452c7af10858231668b1f"); // 37900
 
         pchMessageStart[0] = 0xce;
-        pchMessageStart[1] = 0xe2;
-        pchMessageStart[2] = 0xca;
-        pchMessageStart[3] = 0xff;
-        vAlertPubKey = ParseHex("0461501dda59d9113c2a2aa8e99cd9e8548cd8ccf9391474622a02bc1e4ea7b4a8c1af44a4a8b0f562305382a083d6c5dc55ffe6dbca8efe60374d9e9b3fe7ebe6");
+        pchMessageStart[1] = 0xe3;
+        pchMessageStart[2] = 0xf2;
+        pchMessageStart[3] = 0x4a;
+
+        vAlertPubKey = ParseHex("04c20427c0156e6c1cb9440e2571b2e6ef963162e09c59ababc24d2f0d2d7cea0e79b56703a85bfba448520e3341aab73538a221c493580b7cea64d612a0a8a54a");
         nDefaultPort = 23799;
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1513801233, 178455, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1519826401, 482102, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-//        assert(consensus.hashGenesisBlock == uint256S("0x00000293c6547d004c3b3bd26c8689922a51059bee69c45be6a17fba6bfec702"));
-//        assert(genesis.hashMerkleRoot == uint256S("0x1a1469ab25b242ece1c1eea5301d6c90376b1d612242a720a25862c966057303"));
+
+//      printf("[Testnet genesis]\n %s\n", genesis.ToString().c_str());
+
+        assert(consensus.hashGenesisBlock == uint256S("0xf905ffc113735452ae0513d431cb9c6f97f55dc1c333bb59ee5d2e1991e3cece"));
+        assert(genesis.hashMerkleRoot == uint256S("0x1a1469ab25b242ece1c1eea5301d6c90376b1d612242a720a25862c966057303"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -261,16 +265,18 @@ public:
         // vSeeds.push_back(CDNSSeedData("dashdot.io",  "testnet-seed.dashdot.io"));
         // vSeeds.push_back(CDNSSeedData("masternode.io", "test.dnsseed.masternode.io"));
 
-        // Testnet Dash addresses start with 'y'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,140);
-        // Testnet Dash script addresses start with '8' or '9'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,19);
+        // Testnet Dash addresses start with 'I'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,102);
+        // Testnet Dash script addresses start with '7'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,15);
         // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
         // Testnet Dash BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
         // Testnet Dash BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
+
+
 
         // Testnet Dash BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
@@ -285,13 +291,13 @@ public:
 
         nPoolMaxTransactions = 3;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
-        strSporkPubKey = "04c9ecf5f1a9c0220eab130776839c84780eb698f14a842ede2d66e0a7ab27270a0892aa34a10a671fc8c9472da0ef5f7bab3001eeb8cd886d6970a9d7aedd30c1";
+        strSporkPubKey = "04e8b7ee1c4e9907e9b86abad8afc3b9fe25a5344ef4bd57456edb7f89d17b9ecfb3acc2f4199b379ee57d875c8283c40b9bb8f4b8a99ee95ee1da685d6ef29e65";
 
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
-            (    0, uint256S("0x00000293c6547d004c3b3bd26c8689922a51059bee69c45be6a17fba6bfec702")),
+            (    0, uint256S("0x00000447e0491b8a049fc051da904abf21b433a88f3a8f27f19f61110239a638")),
 
-            1513801233, // * UNIX timestamp of last checkpoint block
+            1519826401, // * UNIX timestamp of last checkpoint block
             0,          // * total number of transactions between genesis and last checkpoint
                         //   (the tx=... number in the SetBestChain debug.log lines)
             500         // * estimated number of transactions per day after checkpoint

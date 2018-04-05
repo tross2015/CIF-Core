@@ -1234,15 +1234,14 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
     CAmount nSubsidyBase;
 
     if(nPrevHeight == 1) return 200000000 * COIN;
+    if(nPrevHeight > 1 && nPrevHeight <= 600) return 50 * COIN;
 
-    if(nPrevHeight > 1 && nPrevHeight <= 200000) return 50 * COIN;
-        if(nPrevHeight > 200000 && nPrevHeight <= 400000) return 25 * COIN;
-        if(nPrevHeight > 400000 && nPrevHeight <= 600000) return 12.5 * COIN;
-        if(nPrevHeight > 600000 && nPrevHeight <= 800000) return 6.25 * COIN;
-        if(nPrevHeight > 800000 && nPrevHeight <= 1000000) return 3.125 * COIN;
-        if(nPrevHeight > 1000000) return 1.5 * COIN;
-
-
+//        if(nPrevHeight > 1 && nPrevHeight <= 200000) return 50 * COIN;
+//        if(nPrevHeight > 200000 && nPrevHeight <= 400000) return 25 * COIN;
+//        if(nPrevHeight > 400000 && nPrevHeight <= 600000) return 12.5 * COIN;
+//        if(nPrevHeight > 600000 && nPrevHeight <= 800000) return 6.25 * COIN;
+//        if(nPrevHeight > 800000 && nPrevHeight <= 1000000) return 3.125 * COIN;
+//        if(nPrevHeight > 1000000) return 1.5 * COIN;
 
     if (nPrevHeight <= 4500 && Params().NetworkIDString() == CBaseChainParams::MAIN) {
         /* a bug which caused diff to not be correctly calculated */

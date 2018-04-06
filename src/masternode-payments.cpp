@@ -125,6 +125,8 @@ bool IsBlockValueValid(const CBlock& block, int nBlockHeight, CAmount blockRewar
         }
     }
 
+    printf("Error| %s", strErrorRet.c_str());
+
     // it MUST be a regular block
     return isBlockRewardValueMet;
 }

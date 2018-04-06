@@ -1261,7 +1261,7 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
         //HERE IS FIX FOR TESTNET
         if(nPrevHeight == 0) return 500 * COIN;
         if(nPrevHeight == 1) return 200000000 * COIN;
-        if(nPrevHeight > 1 && nPrevHeight <= 701) return 50 * COIN;
+        if(nPrevHeight > 1 && nPrevHeight <= 799) return 50 * COIN;
 
         nSubsidyBase = (2222222.0 / (pow((dDiff+2600.0)/9.0,2.0)));
         if(nSubsidyBase > 25) nSubsidyBase = 25;

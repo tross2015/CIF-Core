@@ -1244,6 +1244,7 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
     //TODO: fix warning on MAINNET
     if (Params().NetworkIDString() == CBaseChainParams::MAIN) {
 
+        if(nPrevHeight == 0) return 500 * COIN;
         if(nPrevHeight == 1) return 200000000 * COIN;
         if(nPrevHeight > 1 && nPrevHeight <= 200000) return 50 * COIN;
         if(nPrevHeight > 200000 && nPrevHeight <= 400000)  nSubsidyBase = 25;
@@ -1252,9 +1253,9 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
         if(nPrevHeight > 800000 && nPrevHeight <= 1000000) nSubsidyBase = 3.125;
         if(nPrevHeight > 1000000) nSubsidyBase = 1.5;
 
-//      nSubsidyBase = (2222222.0 / (pow((dDiff+2600.0)/9.0,2.0)));
-//      if(nSubsidyBase > 25) nSubsidyBase = 25;
-//      else if(nSubsidyBase < 5) nSubsidyBase = 5;
+        nSubsidyBase = (2222222.0 / (pow((dDiff+2600.0)/9.0,2.0)));
+        if(nSubsidyBase > 25) nSubsidyBase = 25;
+        else if(nSubsidyBase < 5) nSubsidyBase = 5;
 
     } else if (Params().NetworkIDString() == CBaseChainParams::TESTNET) {
 

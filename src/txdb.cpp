@@ -11,6 +11,7 @@
 #include "uint256.h"
 #include "ui_interface.h"
 #include "init.h"
+#include "spork.h"
 
 #include <stdint.h>
 
@@ -374,8 +375,13 @@ bool CBlockTreeDB::LoadBlockIndexGuts(boost::function<CBlockIndex*(const uint256
                 pindexNew->nStatus        = diskindex.nStatus;
                 pindexNew->nTx            = diskindex.nTx;
 
-                if (!CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, Params().GetConsensus()))
-                    return error("%s: CheckProofOfWork failed: %s", __func__, pindexNew->ToString());
+                if (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG)) {
+                    if (pindexNew->nHeight > 88760 && !CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, Params().GetConsensus()))
+                        return error("%s: CheckProofOfWork failed: %s", __func__, pindexNew->ToString());
+                } else {
+                    if (!CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, Params().GetConsensus()))
+                        return error("%s: CheckProofOfWork failed: %s", __func__, pindexNew->ToString());
+                }
 
                 pcursor->Next();
             } else {

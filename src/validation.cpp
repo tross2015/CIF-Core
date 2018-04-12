@@ -1169,7 +1169,7 @@ bool WriteBlockToDisk(const CBlock& block, CDiskBlockPos& pos, const CMessageHea
     return true;
 }
 
-bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus::Params& consensusParams)
+bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus::Params& consensusParams, bool fCheckPOW)
 {
     block.SetNull();
 
@@ -1187,7 +1187,7 @@ bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus:
     }
 
     // Check the header
-    if (!CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
+    if (fCheckPOW && !CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
         return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
 
     return true;
@@ -1195,7 +1195,8 @@ bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus:
 
 bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus::Params& consensusParams)
 {
-    if (!ReadBlockFromDisk(block, pindex->GetBlockPos(), consensusParams))
+    bool needPoWCheck = (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG) && pindex->nHeight > 88760);
+    if (!ReadBlockFromDisk(block, pindex->GetBlockPos(), consensusParams, needPoWCheck))
         return false;
     if (block.GetHash() != pindex->GetBlockHash())
         return error("ReadBlockFromDisk(CBlock&, CBlockIndex*): GetHash() doesn't match index for %s at %s",
@@ -1970,9 +1971,15 @@ static bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockInd
 
     int64_t nTimeStart = GetTimeMicros();
 
-    // Check it again in case a previous version let a bad block in
-    if (!CheckBlock(block, state, !fJustCheck, !fJustCheck))
-        return false;
+    if (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG) && pindex->nHeight > 88760) {
+        // Check it again in case a previous version let a bad block in
+        if (!CheckBlock(block, state, !fJustCheck, !fJustCheck))
+            return false;
+    } else {
+        // Check it again in case a previous version let a bad block in
+        if (!CheckBlock(block, state, false, !fJustCheck))
+            return false;
+    }
 
     // verify that the view's current state corresponds to the previous block
     uint256 hashPrevBlock = pindex->pprev == NULL ? uint256() : pindex->pprev->GetBlockHash();
@@ -3248,17 +3255,9 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationState& sta
 {
     const Consensus::Params& consensusParams = Params().GetConsensus();
     int nHeight = pindexPrev->nHeight + 1;
-    // Check proof of work
-    if(Params().NetworkIDString() == CBaseChainParams::MAIN && nHeight <= 68589){
-        // architecture issues with DGW v1 and v2)
-        unsigned int nBitsNext = GetNextWorkRequired(pindexPrev, &block, consensusParams);
-        double n1 = ConvertBitsToDouble(block.nBits);
-        double n2 = ConvertBitsToDouble(nBitsNext);
 
-        if (abs(n1-n2) > n1*0.5)            
-            return state.DoS(100, error("%s : incorrect proof of work (DGW pre-fork) - %f %f %f at %d | (%d, %d)", __func__, abs(n1-n2), n1, n2, nHeight, block.nBits, nBitsNext),
-                            REJECT_INVALID, "bad-diffbits");
-    } else {
+    // Check proof of work
+    if(Params().NetworkIDString() == CBaseChainParams::MAIN && nHeight > 88760) {
         if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams))
             return state.DoS(100, error("%s : incorrect proof of work at %d", __func__, nHeight),
                             REJECT_INVALID, "bad-diffbits");
@@ -3363,8 +3362,11 @@ static bool AcceptBlockHeader(const CBlockHeader& block, CValidationState& state
             return true;
         }
 
-        if (!CheckBlockHeader(block, state))
+        if (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG) && pindex != NULL && pindex->nHeight < 88761 && !CheckBlockHeader(block, state, false)) {
             return false;
+        } else if (pindex != NULL && !CheckBlockHeader(block, state)){ //TODO: Check this case
+            return false;
+        }
 
         // Get prev block index
         CBlockIndex* pindexPrev = NULL;
@@ -3449,8 +3451,9 @@ static bool AcceptBlock(const CBlock& block, CValidationState& state, const CCha
         if (fTooFarAhead) return true;      // Block height is too high
     }
     if (fNewBlock) *fNewBlock = true;
-
-    if ((!CheckBlock(block, state)) || !ContextualCheckBlock(block, state, pindex->pprev)) {
+    //TODO: Check this
+    bool fCheckPoW = !sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG) || pindex->nHeight > 88760;
+    if ((!CheckBlock(block, state, fCheckPoW)) || !ContextualCheckBlock(block, state, pindex->pprev)) {
         if (state.IsInvalid() && !state.CorruptionPossible()) {
             pindex->nStatus |= BLOCK_FAILED_VALID;
             setDirtyBlockIndex.insert(pindex);
@@ -4109,7 +4112,9 @@ bool LoadExternalBlockFile(const CChainParams& chainparams, FILE* fileIn, CDiskB
                     std::pair<std::multimap<uint256, CDiskBlockPos>::iterator, std::multimap<uint256, CDiskBlockPos>::iterator> range = mapBlocksUnknownParent.equal_range(head);
                     while (range.first != range.second) {
                         std::multimap<uint256, CDiskBlockPos>::iterator it = range.first;
-                        if (ReadBlockFromDisk(block, it->second, chainparams.GetConsensus()))
+                        CBlockIndex *pBlockIndex = mapBlockIndex[block.GetHash()];
+                        bool boolCheckPoW = (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG) && pBlockIndex->nHeight > 88760);
+                        if (ReadBlockFromDisk(block, it->second, chainparams.GetConsensus(), boolCheckPoW))
                         {
                             LogPrint("reindex", "%s: Processing out of order child %s of %s\n", __func__, block.GetHash().ToString(),
                                     head.ToString());

@@ -19,10 +19,10 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(DASH);
-    unitlist.append(mDASH);
-    unitlist.append(uDASH);
-    unitlist.append(duffs);
+    unitlist.append(CIF);
+    unitlist.append(mCIF);
+    unitlist.append(uCIF);
+    unitlist.append(lCIF);
     return unitlist;
 }
 
@@ -30,10 +30,10 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case DASH:
-    case mDASH:
-    case uDASH:
-    case duffs:
+    case CIF:
+    case mCIF:
+    case uCIF:
+    case lCIF:
         return true;
     default:
         return false;
@@ -46,10 +46,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case DASH: return QString("DASH");
-            case mDASH: return QString("mDASH");
-            case uDASH: return QString::fromUtf8("μDASH");
-            case duffs: return QString("duffs");
+            case CIF: return QString("CIF");
+            case mCIF: return QString("mCIF");
+            case uCIF: return QString::fromUtf8("μCIF");
+            case lCIF: return QString("lCIF");
             default: return QString("???");
         }
     }
@@ -57,10 +57,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case DASH: return QString("tDASH");
-            case mDASH: return QString("mtDASH");
-            case uDASH: return QString::fromUtf8("μtDASH");
-            case duffs: return QString("tduffs");
+            case CIF: return QString("tCIF");
+            case mCIF: return QString("mtCIF");
+            case uCIF: return QString::fromUtf8("μtCIF");
+            case lCIF: return QString("ltCIF");
             default: return QString("???");
         }
     }
@@ -72,10 +72,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case DASH: return QString("Dash");
-            case mDASH: return QString("Milli-Dash (1 / 1" THIN_SP_UTF8 "000)");
-            case uDASH: return QString("Micro-Dash (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-Dash (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case CIF: return QString("CIF");
+            case mCIF: return QString("Milli-CIF (1 / 1" THIN_SP_UTF8 "000)");
+            case uCIF: return QString("Micro-CIF (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case lCIF: return QString("Ten Nano-CIF (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -83,10 +83,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case DASH: return QString("TestDashs");
-            case mDASH: return QString("Milli-TestDash (1 / 1" THIN_SP_UTF8 "000)");
-            case uDASH: return QString("Micro-TestDash (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-TestDash (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case CIF: return QString("TestCIFs");
+            case mCIF: return QString("Milli-TestCIF (1 / 1" THIN_SP_UTF8 "000)");
+            case uCIF: return QString("Micro-TestCIF (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case lCIF: return QString("Ten Nano-TestCIF (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -96,10 +96,10 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case DASH:  return 100000000;
-    case mDASH: return 100000;
-    case uDASH: return 100;
-    case duffs: return 1;
+    case CIF:  return 100000000;
+    case mCIF: return 100000;
+    case uCIF: return 100;
+    case lCIF: return 1;
     default:   return 100000000;
     }
 }
@@ -108,10 +108,10 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case DASH: return 8;
-    case mDASH: return 5;
-    case uDASH: return 2;
-    case duffs: return 0;
+    case CIF: return 8;
+    case mCIF: return 5;
+    case uCIF: return 2;
+    case lCIF: return 0;
     default: return 0;
     }
 }

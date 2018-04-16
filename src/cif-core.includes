@@ -36,3 +36,4 @@ univalue/include
 univalue/lib
 wallet
 zmq
+crypto/cif_hash

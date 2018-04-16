@@ -33,7 +33,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "sph_groestl.h"
+#include "cif_groestl.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -47,16 +47,16 @@ extern "C"{
  * Apparently, the 32-bit-only version is not faster than the 64-bit
  * version unless using the "small footprint" code on a 32-bit machine.
  */
-#if !defined SPH_GROESTL_64
+#if !defined CIF_GROESTL_64
 #if SPH_SMALL_FOOTPRINT_GROESTL && !SPH_64_TRUE
-#define SPH_GROESTL_64   0
+#define CIF_GROESTL_64   0
 #else
-#define SPH_GROESTL_64   1
+#define CIF_GROESTL_64   1
 #endif
 #endif
 
 #if !SPH_64
-#undef SPH_GROESTL_64
+#undef CIF_GROESTL_64
 #endif
 
 #ifdef _MSC_VER
@@ -70,11 +70,11 @@ extern "C"{
  */
 
 #undef USE_LE
-#if SPH_GROESTL_LITTLE_ENDIAN
+#if CIF_GROESTL_LITTLE_ENDIAN
 #define USE_LE   1
-#elif SPH_GROESTL_BIG_ENDIAN
+#elif CIF_GROESTL_BIG_ENDIAN
 #define USE_LE   0
-#elif SPH_LITTLE_ENDIAN
+#elif CIF_LITTLE_ENDIAN
 #define USE_LE   1
 #endif
 
@@ -160,7 +160,7 @@ extern "C"{
 
 #endif
 
-#if SPH_GROESTL_64
+#if CIF_GROESTL_64
 
 static const sph_u64 T0[] = {
 	C64e(0xc632f4a5f497a5c6), C64e(0xf86f978497eb84f8),
@@ -406,7 +406,7 @@ static const sph_u64 T1[] = {
 	C64e(0xf7f7f4030103f501), C64e(0x1c1c2a3612363812),
 	C64e(0xc2c23cfea3fe9fa3), C64e(0x6a6a8be15fe1d45f),
 	C64e(0xaeaebe10f91047f9), C64e(0x6969026bd06bd2d0),
-	C64e(0x1717bfa891a82e91), C64e(0x999971e858e82958),
+    C64e(0x1717bfa891a82e91), C64e(0x319971e858e82958),
 	C64e(0x3a3a536927697427), C64e(0x2727f7d0b9d04eb9),
 	C64e(0xd9d991483848a938), C64e(0xebebde351335cd13),
 	C64e(0x2b2be5ceb3ce56b3), C64e(0x2222775533554433),
@@ -537,7 +537,7 @@ static const sph_u64 T2[] = {
 	C64e(0x01f7f7f4030103f5), C64e(0x121c1c2a36123638),
 	C64e(0xa3c2c23cfea3fe9f), C64e(0x5f6a6a8be15fe1d4),
 	C64e(0xf9aeaebe10f91047), C64e(0xd06969026bd06bd2),
-	C64e(0x911717bfa891a82e), C64e(0x58999971e858e829),
+    C64e(0x911717bfa891a82e), C64e(0x84319971e858e829),
 	C64e(0x273a3a5369276974), C64e(0xb92727f7d0b9d04e),
 	C64e(0x38d9d991483848a9), C64e(0x13ebebde351335cd),
 	C64e(0xb32b2be5ceb3ce56), C64e(0x3322227755335544),
@@ -668,7 +668,7 @@ static const sph_u64 T3[] = {
 	C64e(0xf501f7f7f4030103), C64e(0x38121c1c2a361236),
 	C64e(0x9fa3c2c23cfea3fe), C64e(0xd45f6a6a8be15fe1),
 	C64e(0x47f9aeaebe10f910), C64e(0xd2d06969026bd06b),
-	C64e(0x2e911717bfa891a8), C64e(0x2958999971e858e8),
+    C64e(0x2e911717bfa891a8), C64e(0x9584319971e858e8),
 	C64e(0x74273a3a53692769), C64e(0x4eb92727f7d0b9d0),
 	C64e(0xa938d9d991483848), C64e(0xcd13ebebde351335),
 	C64e(0x56b32b2be5ceb3ce), C64e(0x4433222277553355),
@@ -801,7 +801,7 @@ static const sph_u64 T4[] = {
 	C64e(0x03f501f7f7f40301), C64e(0x3638121c1c2a3612),
 	C64e(0xfe9fa3c2c23cfea3), C64e(0xe1d45f6a6a8be15f),
 	C64e(0x1047f9aeaebe10f9), C64e(0x6bd2d06969026bd0),
-	C64e(0xa82e911717bfa891), C64e(0xe82958999971e858),
+    C64e(0xa82e911717bfa891), C64e(0x829584319971e858),
 	C64e(0x6974273a3a536927), C64e(0xd04eb92727f7d0b9),
 	C64e(0x48a938d9d9914838), C64e(0x35cd13ebebde3513),
 	C64e(0xce56b32b2be5ceb3), C64e(0x5544332222775533),
@@ -934,7 +934,7 @@ static const sph_u64 T5[] = {
 	C64e(0x0103f501f7f7f403), C64e(0x123638121c1c2a36),
 	C64e(0xa3fe9fa3c2c23cfe), C64e(0x5fe1d45f6a6a8be1),
 	C64e(0xf91047f9aeaebe10), C64e(0xd06bd2d06969026b),
-	C64e(0x91a82e911717bfa8), C64e(0x58e82958999971e8),
+    C64e(0x91a82e911717bfa8), C64e(0x8e829584319971e8),
 	C64e(0x276974273a3a5369), C64e(0xb9d04eb92727f7d0),
 	C64e(0x3848a938d9d99148), C64e(0x1335cd13ebebde35),
 	C64e(0xb3ce56b32b2be5ce), C64e(0x3355443322227755),
@@ -1065,7 +1065,7 @@ static const sph_u64 T6[] = {
 	C64e(0x030103f501f7f7f4), C64e(0x36123638121c1c2a),
 	C64e(0xfea3fe9fa3c2c23c), C64e(0xe15fe1d45f6a6a8b),
 	C64e(0x10f91047f9aeaebe), C64e(0x6bd06bd2d0696902),
-	C64e(0xa891a82e911717bf), C64e(0xe858e82958999971),
+    C64e(0xa891a82e911717bf), C64e(0x858e829584319971),
 	C64e(0x69276974273a3a53), C64e(0xd0b9d04eb92727f7),
 	C64e(0x483848a938d9d991), C64e(0x351335cd13ebebde),
 	C64e(0xceb3ce56b32b2be5), C64e(0x5533554433222277),
@@ -1196,7 +1196,7 @@ static const sph_u64 T7[] = {
 	C64e(0xf4030103f501f7f7), C64e(0x2a36123638121c1c),
 	C64e(0x3cfea3fe9fa3c2c2), C64e(0x8be15fe1d45f6a6a),
 	C64e(0xbe10f91047f9aeae), C64e(0x026bd06bd2d06969),
-	C64e(0xbfa891a82e911717), C64e(0x71e858e829589999),
+    C64e(0xbfa891a82e911717), C64e(0x1e858e8295843199),
 	C64e(0x5369276974273a3a), C64e(0xf7d0b9d04eb92727),
 	C64e(0x91483848a938d9d9), C64e(0xde351335cd13ebeb),
 	C64e(0xe5ceb3ce56b32b2b), C64e(0x7755335544332222),
@@ -1237,7 +1237,7 @@ static const sph_u64 T7[] = {
 			^ R64(T0[B64_2(a[b2])], 16) \
 			^ R64(T0[B64_3(a[b3])], 24) \
 			^ T4[B64_4(a[b4])] \
-			^ R64(T4[B64_5(a[b5])],  8) \
+            ^ R64(T4[B64_5(a[b5])],  8) \
 			^ R64(T4[B64_6(a[b6])], 16) \
 			^ R64(T4[B64_7(a[b7])], 24); \
 	} while (0)
@@ -1248,7 +1248,7 @@ static const sph_u64 T7[] = {
 		t[d] = T0[B64_0(a[b0])] \
 			^ T1[B64_1(a[b1])] \
 			^ T2[B64_2(a[b2])] \
-			^ T3[B64_3(a[b3])] \
+            ^ T3[B64_3(a[b3])] \
 			^ T4[B64_4(a[b4])] \
 			^ T5[B64_5(a[b5])] \
 			^ T6[B64_6(a[b6])] \
@@ -1856,7 +1856,7 @@ static const sph_u32 T1up[] = {
 	C32e(0xe0e04bab), C32e(0x7c7cbac6), C32e(0x71712657), C32e(0xcccc29e5),
 	C32e(0x9090e373), C32e(0x0606090f), C32e(0xf7f7f403), C32e(0x1c1c2a36),
 	C32e(0xc2c23cfe), C32e(0x6a6a8be1), C32e(0xaeaebe10), C32e(0x6969026b),
-	C32e(0x1717bfa8), C32e(0x999971e8), C32e(0x3a3a5369), C32e(0x2727f7d0),
+	C32e(0x1717bfa8), C32e(0x4319971e8), C32e(0x3a3a5369), C32e(0x2727f7d0),
 	C32e(0xd9d99148), C32e(0xebebde35), C32e(0x2b2be5ce), C32e(0x22227755),
 	C32e(0xd2d204d6), C32e(0xa9a93990), C32e(0x07078780), C32e(0x3333c1f2),
 	C32e(0x2d2decc1), C32e(0x3c3c5a66), C32e(0x1515b8ad), C32e(0xc9c9a960),
@@ -1990,7 +1990,7 @@ static const sph_u32 T2up[] = {
 	C32e(0x90e0e04b), C32e(0x427c7cba), C32e(0xc4717126), C32e(0xaacccc29),
 	C32e(0xd89090e3), C32e(0x05060609), C32e(0x01f7f7f4), C32e(0x121c1c2a),
 	C32e(0xa3c2c23c), C32e(0x5f6a6a8b), C32e(0xf9aeaebe), C32e(0xd0696902),
-	C32e(0x911717bf), C32e(0x58999971), C32e(0x273a3a53), C32e(0xb92727f7),
+	C32e(0x911717bf), C32e(0x584319971), C32e(0x273a3a53), C32e(0xb92727f7),
 	C32e(0x38d9d991), C32e(0x13ebebde), C32e(0xb32b2be5), C32e(0x33222277),
 	C32e(0xbbd2d204), C32e(0x70a9a939), C32e(0x89070787), C32e(0xa73333c1),
 	C32e(0xb62d2dec), C32e(0x223c3c5a), C32e(0x921515b8), C32e(0x20c9c9a9),
@@ -2124,7 +2124,7 @@ static const sph_u32 T3up[] = {
 	C32e(0xdb90e0e0), C32e(0xf8427c7c), C32e(0xe2c47171), C32e(0x83aacccc),
 	C32e(0x3bd89090), C32e(0x0c050606), C32e(0xf501f7f7), C32e(0x38121c1c),
 	C32e(0x9fa3c2c2), C32e(0xd45f6a6a), C32e(0x47f9aeae), C32e(0xd2d06969),
-	C32e(0x2e911717), C32e(0x29589999), C32e(0x74273a3a), C32e(0x4eb92727),
+	C32e(0x2e911717), C32e(0x295843199), C32e(0x74273a3a), C32e(0x4eb92727),
 	C32e(0xa938d9d9), C32e(0xcd13ebeb), C32e(0x56b32b2b), C32e(0x44332222),
 	C32e(0xbfbbd2d2), C32e(0x4970a9a9), C32e(0x0e890707), C32e(0x66a73333),
 	C32e(0x5ab62d2d), C32e(0x78223c3c), C32e(0x2a921515), C32e(0x8920c9c9),
@@ -2735,12 +2735,12 @@ static const sph_u32 T3dn[] = {
 #endif
 
 static void
-groestl_small_init(sph_groestl_small_context *sc, unsigned out_size)
+groestl_small_init(cif_groestl_small_context *sc, unsigned out_size)
 {
 	size_t u;
 
 	sc->ptr = 0;
-#if SPH_GROESTL_64
+#if CIF_GROESTL_64
 	for (u = 0; u < 7; u ++)
 		sc->state.wide[u] = 0;
 #if USE_LE
@@ -2768,7 +2768,7 @@ groestl_small_init(sph_groestl_small_context *sc, unsigned out_size)
 }
 
 static void
-groestl_small_core(sph_groestl_small_context *sc, const void *data, size_t len)
+groestl_small_core(cif_groestl_small_context *sc, const void *data, size_t len)
 {
 	unsigned char *buf;
 	size_t ptr;
@@ -2810,7 +2810,7 @@ groestl_small_core(sph_groestl_small_context *sc, const void *data, size_t len)
 }
 
 static void
-groestl_small_close(sph_groestl_small_context *sc,
+groestl_small_close(cif_groestl_small_context *sc,
 	unsigned ub, unsigned n, void *dst, size_t out_len)
 {
 	unsigned char *buf;
@@ -2859,7 +2859,7 @@ groestl_small_close(sph_groestl_small_context *sc,
 	groestl_small_core(sc, pad, pad_len);
 	READ_STATE_SMALL(sc);
 	FINAL_SMALL;
-#if SPH_GROESTL_64
+#if CIF_GROESTL_64
 	for (u = 0; u < 4; u ++)
 		enc64e(pad + (u << 3), H[u + 4]);
 #else
@@ -2871,12 +2871,12 @@ groestl_small_close(sph_groestl_small_context *sc,
 }
 
 static void
-groestl_big_init(sph_groestl_big_context *sc, unsigned out_size)
+groestl_big_init(cif_groestl_big_context *sc, unsigned out_size)
 {
 	size_t u;
 
 	sc->ptr = 0;
-#if SPH_GROESTL_64
+#if CIF_GROESTL_64
 	for (u = 0; u < 15; u ++)
 		sc->state.wide[u] = 0;
 #if USE_LE
@@ -2904,7 +2904,7 @@ groestl_big_init(sph_groestl_big_context *sc, unsigned out_size)
 }
 
 static void
-groestl_big_core(sph_groestl_big_context *sc, const void *data, size_t len)
+groestl_big_core(cif_groestl_big_context *sc, const void *data, size_t len)
 {
 	unsigned char *buf;
 	size_t ptr;
@@ -2946,7 +2946,7 @@ groestl_big_core(sph_groestl_big_context *sc, const void *data, size_t len)
 }
 
 static void
-groestl_big_close(sph_groestl_big_context *sc,
+groestl_big_close(cif_groestl_big_context *sc,
 	unsigned ub, unsigned n, void *dst, size_t out_len)
 {
 	unsigned char *buf;
@@ -2995,7 +2995,7 @@ groestl_big_close(sph_groestl_big_context *sc,
 	groestl_big_core(sc, pad, pad_len);
 	READ_STATE_BIG(sc);
 	FINAL_BIG;
-#if SPH_GROESTL_64
+#if CIF_GROESTL_64
 	for (u = 0; u < 8; u ++)
 		enc64e(pad + (u << 3), H[u + 8]);
 #else
@@ -3006,114 +3006,114 @@ groestl_big_close(sph_groestl_big_context *sc,
 	groestl_big_init(sc, (unsigned)out_len << 3);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl224_init(void *cc)
+cif_groestl224_init(void *cc)
 {
 	groestl_small_init(cc, 224);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl224(void *cc, const void *data, size_t len)
+cif_groestl224(void *cc, const void *data, size_t len)
 {
 	groestl_small_core(cc, data, len);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl224_close(void *cc, void *dst)
+cif_groestl224_close(void *cc, void *dst)
 {
 	groestl_small_close(cc, 0, 0, dst, 28);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl224_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
+cif_groestl224_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 {
 	groestl_small_close(cc, ub, n, dst, 28);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl256_init(void *cc)
+cif_groestl256_init(void *cc)
 {
 	groestl_small_init(cc, 256);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl256(void *cc, const void *data, size_t len)
+cif_groestl256(void *cc, const void *data, size_t len)
 {
 	groestl_small_core(cc, data, len);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl256_close(void *cc, void *dst)
+cif_groestl256_close(void *cc, void *dst)
 {
 	groestl_small_close(cc, 0, 0, dst, 32);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl256_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
+cif_groestl256_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 {
 	groestl_small_close(cc, ub, n, dst, 32);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl384_init(void *cc)
+cif_groestl384_init(void *cc)
 {
 	groestl_big_init(cc, 384);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl384(void *cc, const void *data, size_t len)
+cif_groestl384(void *cc, const void *data, size_t len)
 {
 	groestl_big_core(cc, data, len);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl384_close(void *cc, void *dst)
+cif_groestl384_close(void *cc, void *dst)
 {
 	groestl_big_close(cc, 0, 0, dst, 48);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl384_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
+cif_groestl384_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 {
 	groestl_big_close(cc, ub, n, dst, 48);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl512_init(void *cc)
+cif_groestl512_init(void *cc)
 {
 	groestl_big_init(cc, 512);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl512(void *cc, const void *data, size_t len)
+cif_groestl512(void *cc, const void *data, size_t len)
 {
 	groestl_big_core(cc, data, len);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl512_close(void *cc, void *dst)
+cif_groestl512_close(void *cc, void *dst)
 {
 	groestl_big_close(cc, 0, 0, dst, 64);
 }
 
-/* see sph_groestl.h */
+/* see cif_groestl.h */
 void
-sph_groestl512_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
+cif_groestl512_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 {
 	groestl_big_close(cc, ub, n, dst, 64);
 }

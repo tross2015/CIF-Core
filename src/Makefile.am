@@ -315,7 +315,8 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/sha256.cpp \
   crypto/sha256.h \
   crypto/sha512.cpp \
-  crypto/sha512.h
+  crypto/sha512.h \
+  crypto/cif_hash/cif_aes_helper.c
 
 # x11
 crypto_libbitcoin_crypto_a_SOURCES += \
@@ -341,7 +342,11 @@ crypto_libbitcoin_crypto_a_SOURCES += \
   crypto/sph_shavite.h \
   crypto/sph_simd.h \
   crypto/sph_skein.h \
-  crypto/sph_types.h
+  crypto/sph_types.h \
+  crypto/cif_hash/cif_groestl.h \
+  crypto/cif_hash/groestl.c \
+  crypto/cif_hash/cif_shavite.h \
+  crypto/cif_hash/shavite.c
 
 # common: shared between dashd, and dash-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)

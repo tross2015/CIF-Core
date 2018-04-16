@@ -1241,18 +1241,11 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
         dDiff = ConvertBitsToDouble(nPrevBits);
     }
 
-    //TODO: put fix for MAINNET
-    //TODO: fix warning on MAINNET
     if (Params().NetworkIDString() == CBaseChainParams::MAIN) {
 
         if(nPrevHeight == 0) return 500 * COIN;
         if(nPrevHeight == 1) return 200000000 * COIN;
         if(nPrevHeight > 1 && nPrevHeight <= 200000) return 50 * COIN;
-        if(nPrevHeight > 200000 && nPrevHeight <= 400000)  nSubsidyBase = 25;
-        if(nPrevHeight > 400000 && nPrevHeight <= 600000)  nSubsidyBase = 12.5;
-        if(nPrevHeight > 600000 && nPrevHeight <= 800000)  nSubsidyBase = 6.25;
-        if(nPrevHeight > 800000 && nPrevHeight <= 1000000) nSubsidyBase = 3.125;
-        if(nPrevHeight > 1000000) nSubsidyBase = 1.5;
 
         nSubsidyBase = (2222222.0 / (pow((dDiff+2600.0)/9.0,2.0)));
         if(nSubsidyBase > 25) nSubsidyBase = 25;
@@ -1287,22 +1280,7 @@ CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
         return blockValue/2;
     }
 
-    // TODO: Need to check this on MAIN NET
-    CAmount ret = blockValue/5; // start at 20%
-
-    int nMNPIBlock = Params().GetConsensus().nMasternodePaymentsIncreaseBlock;
-    int nMNPIPeriod = Params().GetConsensus().nMasternodePaymentsIncreasePeriod;
-                                                                      // mainnet:
-    if(nHeight > nMNPIBlock)                  ret += blockValue / 20; // 158000 - 25.0% - 2014-10-24
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 1)) ret += blockValue / 20; // 175280 - 30.0% - 2014-11-25
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 2)) ret += blockValue / 20; // 192560 - 35.0% - 2014-12-26
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 3)) ret += blockValue / 40; // 209840 - 37.5% - 2015-01-26
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 4)) ret += blockValue / 40; // 227120 - 40.0% - 2015-02-27
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 5)) ret += blockValue / 40; // 244400 - 42.5% - 2015-03-30
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 6)) ret += blockValue / 40; // 261680 - 45.0% - 2015-05-01
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 7)) ret += blockValue / 40; // 278960 - 47.5% - 2015-06-01
-    if(nHeight > nMNPIBlock+(nMNPIPeriod* 9)) ret += blockValue / 40; // 313520 - 50.0% - 2015-08-03
-
+    CAmount ret = blockValue/2; // 50% in CIF
     return ret;
 }
 

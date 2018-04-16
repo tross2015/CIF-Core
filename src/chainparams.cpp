@@ -119,6 +119,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 4032;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 3226; // 80% of 4032
 
+        consensus.vDeployments[Consensus::DEPLOYMENT_X11].bit = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_X11].nStartTime = 1523910867; // Apr 16th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_X11].nTimeout = 1555457700; // Apr 16th, 2019
+
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000d3c03cc1c305c4dd"); // 782700
 

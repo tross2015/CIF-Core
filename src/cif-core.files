@@ -66,10 +66,12 @@ crypto/blake.c
 crypto/bmw.c
 crypto/bmw.c
 crypto/cif_hash/cif_aes_helper.c
+crypto/cif_hash/cif_echo.c
+crypto/cif_hash/cif_echo.h
+crypto/cif_hash/cif_groestl.c
 crypto/cif_hash/cif_groestl.h
+crypto/cif_hash/cif_shavite.c
 crypto/cif_hash/cif_shavite.h
-crypto/cif_hash/groestl.c
-crypto/cif_hash/shavite.c
 crypto/common.h
 crypto/common.h
 crypto/cubehash.c

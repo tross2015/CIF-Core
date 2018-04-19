@@ -119,7 +119,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 4032;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 3226; // 80% of 4032
 
-        consensus.vDeployments[Consensus::DEPLOYMENT_X11].bit = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_X11].bit = 3;
         consensus.vDeployments[Consensus::DEPLOYMENT_X11].nStartTime = 1523910867; // Apr 16th, 2018
         consensus.vDeployments[Consensus::DEPLOYMENT_X11].nTimeout = 1555457700; // Apr 16th, 2019
 
@@ -140,8 +140,8 @@ public:
         pchMessageStart[3] = 0x4d;
         vAlertPubKey = ParseHex("048240a8748a80a286b270ba126705ced4f2ce5a7847b3610ea3c06513150dade2a8512ed5ea86320824683fc0818f0ac019214973e677acd1244f6d0571fc5103");
         nDefaultPort = 43199;
-        nMaxTipAge = 12 * 24 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
-        nDelayGetHeadersTime = 12 * 24 * 60 * 60;
+        nMaxTipAge = 24 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
+        nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 100000;
 
         genesis = CreateGenesisBlock(1513801232, 2189284, 0x1e0ffff0, 1, 50 * COIN);
@@ -245,11 +245,14 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 50; // 50% of 100
 
         // The best chain should have at least this much work.
-//        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000924e924a21715"); // 37900
+
+        //In DASH it was:
+        //0x000000000000000000000000000000000000000000000000000924e924a21715 => 37900
         consensus.nMinimumChainWork = uint256S("0x1"); // 1
 
         // By default assume that the signatures in ancestors of this block are valid.
-//        consensus.defaultAssumeValid = uint256S("0x0000000004f5aef732d572ff514af99a995702c92e4452c7af10858231668b1f"); // 37900
+        // In DASH it was:
+        // 0x0000000004f5aef732d572ff514af99a995702c92e4452c7af10858231668b1f => 37900
         consensus.defaultAssumeValid = uint256S("0x1"); // 1
 
         pchMessageStart[0] = 0xce;
@@ -265,8 +268,6 @@ public:
 
         genesis = CreateGenesisBlock(1519826401, 482102, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-
-//      printf("[Testnet genesis]\n %s\n", genesis.ToString().c_str());
 
         assert(consensus.hashGenesisBlock == uint256S("0xf905ffc113735452ae0513d431cb9c6f97f55dc1c333bb59ee5d2e1991e3cece"));
         assert(genesis.hashMerkleRoot == uint256S("0x1a1469ab25b242ece1c1eea5301d6c90376b1d612242a720a25862c966057303"));

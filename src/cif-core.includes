@@ -37,3 +37,16 @@ univalue/lib
 wallet
 zmq
 crypto/cif_hash
+qt/res
+qt/res/icons/light
+qt/res/images/crownium
+qt/res/images/drkblue
+qt/res/movies
+qt/res/src
+qt/res/css
+qt/res/icons/crownium
+qt/res/images/light
+qt/res/images/trad
+qt/res/icons/trad
+qt/res/icons
+qt/res/icons/drkblue

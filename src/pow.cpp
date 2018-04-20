@@ -88,7 +88,7 @@ unsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consens
 
     if (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG)) {
         if (pindexLast->nHeight < 88760 + nPastBlocks)
-        return bnPowLimit.GetCompact();
+            return bnPowLimit.GetCompact();
     }
 
     // make sure we have at least (nPastBlocks + 1) blocks, otherwise just return powLimit

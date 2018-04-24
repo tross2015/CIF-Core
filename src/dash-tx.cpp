@@ -52,10 +52,10 @@ static int AppInitRawTx(int argc, char* argv[])
     if (argc<2 || mapArgs.count("-?") || mapArgs.count("-h") || mapArgs.count("-help"))
     {
         // First part of help message is specific to this utility
-        std::string strUsage = _("Dash Core dash-tx utility version") + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = _("CIF Core cif-tx utility version") + " " + FormatFullVersion() + "\n\n" +
             _("Usage:") + "\n" +
-              "  dash-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded dash transaction") + "\n" +
-              "  dash-tx [options] -create [commands]   " + _("Create hex-encoded dash transaction") + "\n" +
+              "  cif-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded CIF transaction") + "\n" +
+              "  cif-tx [options] -create [commands]   " + _("Create hex-encoded CIF transaction") + "\n" +
               "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());

@@ -14,6 +14,14 @@ src/test/test_dash
 src/qt/test/test_dash-qt
 src/bench/bench_dash
 
+src/cif
+src/cifd
+src/cif-cli
+src/cif-tx
+src/test/test_cif
+src/qt/test/test_cif-qt
+src/bench/bench_cif
+
 # autoreconf
 Makefile.in
 aclocal.m4
@@ -86,7 +94,7 @@ Dash-Qt.app
 
 # Unit-tests
 Makefile.test
-dash-qt_test
+cif-qt_test
 src/test/buildenv.py
 
 # Resources cpp
@@ -131,4 +139,7 @@ qa/pull-tester/tests-config.sh
 dash-cli
 dashd
 dash-qt
+cif-cli
+cifd
+cif-qt
 make

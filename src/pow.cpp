@@ -11,6 +11,7 @@
 #include "primitives/block.h"
 #include "uint256.h"
 #include "util.h"
+#include "spork.h"
 
 #include <math.h>
 
@@ -84,6 +85,11 @@ unsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consens
     /* current difficulty formula, dash - DarkGravity v3, written by Evan Duffield - evan@dash.org */
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     int64_t nPastBlocks = 24;
+
+    if (sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG)) {
+        if (pindexLast->nHeight < 88760 + nPastBlocks)
+            return bnPowLimit.GetCompact();
+    }
 
     // make sure we have at least (nPastBlocks + 1) blocks, otherwise just return powLimit
     if (!pindexLast || pindexLast->nHeight < nPastBlocks) {
@@ -229,6 +235,10 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
     // Check range
     if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
         return error("CheckProofOfWork(): nBits below minimum work");
+
+    if (!sporkManager.IsSporkActive(SPORK_15_REQUIRE_POW_FLAG)) {
+        return true;
+    }
 
     // Check proof of work matches claimed amount
     if (UintToArith256(hash) > bnTarget)

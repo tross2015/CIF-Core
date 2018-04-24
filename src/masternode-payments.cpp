@@ -125,6 +125,8 @@ bool IsBlockValueValid(const CBlock& block, int nBlockHeight, CAmount blockRewar
         }
     }
 
+    printf("Error| %s", strErrorRet.c_str());
+
     // it MUST be a regular block
     return isBlockRewardValueMet;
 }
@@ -583,7 +585,7 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
         }
     }
 
-    LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f DASH\n", strPayeesPossible, (float)nMasternodePayment/COIN);
+    LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f CIF\n", strPayeesPossible, (float)nMasternodePayment/COIN);
     return false;
 }
 

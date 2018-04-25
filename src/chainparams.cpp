@@ -152,8 +152,7 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("209.250.241.176", "209.250.243.131"));
-        vSeeds.push_back(CDNSSeedData("45.77.239.108", "107.191.44.102"));
+        vSeeds.push_back(CDNSSeedData("167.99.94.150", "167.99.94.150"));
 
         // Cif addresses start with 'C'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);

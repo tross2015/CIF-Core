@@ -58,6 +58,10 @@ NOTE: Building with Qt4 is still supported, however, doing so could result in a 
 4.  (Optional) You can also install dashd to your path:
 
         make install
+        
+5.  You can also create a .dmg that contains the .app bundle (optional):
+
+        make deploy
 
 Use Qt Creator as IDE
 ------------------------
